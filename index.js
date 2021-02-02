@@ -20,9 +20,9 @@ module.exports = class SambungKata extends Plugin {
             }
           }
         const url = `https://api.hana.uno/sk?q=${kata}&l=${args[1] || 0}`
+        const startTime = new Date()
         const res = await get(url)
         if (res.statusCode === 200) {
-          const startTime = new Date()
           let result = []
           if (res.body.length === 0)
             return {
