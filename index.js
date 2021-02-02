@@ -18,7 +18,7 @@ module.exports = class SambungKata extends Plugin {
         const res = await get(url)
         if (res.statusCode === 200) {
           let result = []
-          if (res.body === result) return {
+          if (res.body.length === 0) return {
             send: false,
             result: {
               type: 'rich',
