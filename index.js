@@ -11,24 +11,28 @@ module.exports = class SambungKata extends Plugin {
         const kata = args[0]
         if (!kata)
           return {
-            type: 'rich',
-            title: 'ERROR',
-            description: 'Kamu tidak memberikan input!',
-            color: Math.floor(Math.random() * 16777215)
+            send: false,
+            result: {
+              type: 'rich',
+              title: 'ERROR',
+              description: 'Kamu tidak memberikan input!',
+              color: Math.floor(Math.random() * 16777215)
+            }
           }
         const url = `https://api.hana.uno/sk?q=${kata}&l=${args[1] || 0}`
         const res = await get(url)
         if (res.statusCode === 200) {
           let result = []
-          if (res.body.length === 0) return {
-            send: false,
-            result: {
-              type: 'rich',
-              title: 'ERROR',
-              description: `Tidak menemukan kata yang berawalan dari \`${args[0]}\``,
-              color: Math.floor(Math.random() * 16777215),
+          if (res.body.length === 0)
+            return {
+              send: false,
+              result: {
+                type: 'rich',
+                title: 'ERROR',
+                description: `Tidak menemukan kata yang berawalan dari \`${args[0]}\``,
+                color: Math.floor(Math.random() * 16777215)
+              }
             }
-          }
           res.body.forEach(x => result.push(`**${x.word}**`))
           return {
             send: false,
@@ -48,14 +52,15 @@ module.exports = class SambungKata extends Plugin {
           result: {
             type: 'rich',
             title: 'ERROR',
-            description: 'Laporkan ini ke github\nhttps://github.com/hanahaneull/pc-sambungkata',
+            description:
+              'Laporkan ini ke github\nhttps://github.com/hanahaneull/pc-sambungkata',
             color: Math.floor(Math.random() * 16777215)
           }
         }
       }
     })
   }
-  pluginWillUnload() {
+  pluginWillUnload () {
     powercord.api.commands.unregisterCommand('sk')
   }
 }
