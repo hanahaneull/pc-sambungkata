@@ -10,9 +10,9 @@ Clone ke folder plugins powercord mu
 
 # Penggunaan
 
-[prefix]sk [awal kata] [minimal huruf (optional)]
+[prefix]sk [awal kata] [minimal huruf (optional)] [max result]
 
-``.sk bi 10``
+``.sk bi 5 5``
 
 # Showcase
 
