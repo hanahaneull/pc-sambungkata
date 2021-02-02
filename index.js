@@ -18,23 +18,37 @@ module.exports = class SambungKata extends Plugin {
         const res = await get(url)
         if (res.statusCode === 200) {
           let result = []
+          if (res.body === result) return {
+            send: false,
+            result: {
+              type: 'rich',
+              title: 'ERROR',
+              description: `Tidak menemukan kata yang berawalan dari \`${args[0]}\``,
+              color: Math.floor(Math.random() * 16777215),
+            }
+          }
           res.body.forEach(x => result.push(`**${x.word}**`))
           return {
             send: false,
             result: {
               type: 'rich',
               title: 'Hasil',
-              description: result.join(' ^ '),
+              description: result.join(' | '),
               color: Math.floor(Math.random() * 16777215),
               footer: {
-                text: 'https://api.hana.uno/'
+                text: 'https://hana.uno/'
               }
             }
           }
         }
         return {
           send: false,
-          result: 'Error'
+          result: {
+            type: 'rich',
+            title: 'ERROR',
+            description: 'Kamu tidak memberikan input!',
+            color: Math.floor(Math.random() * 16777215)
+          }
         }
       }
     })
