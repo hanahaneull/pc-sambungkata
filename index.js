@@ -33,13 +33,7 @@ module.exports = class SambungKata extends Plugin {
                 color: Math.floor(Math.random() * 16777215)
               }
             }
-          for (const data in res.body) {
-            if (!data.word) {
-              result.push(data)
-              break
-            }
-            result.push(data.word)
-          }
+          res.body.forEach(x => result.push(`**${x.word || x}**`))
           return {
             send: false,
             result: {
