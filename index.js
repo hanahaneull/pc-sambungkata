@@ -22,6 +22,7 @@ module.exports = class SambungKata extends Plugin {
         const url = `https://api.hana.uno/sk?q=${kata}&l=${args[1] || 0}`
         const res = await get(url)
         if (res.statusCode === 200) {
+          const startTime = new Date()
           let result = []
           if (res.body.length === 0)
             return {
@@ -41,7 +42,7 @@ module.exports = class SambungKata extends Plugin {
               title: 'Hasil',
               description: result.slice(0, args[2] || 10).join(' | '),
               color: Math.floor(Math.random() * 16777215),
-              footer: { text: 'https://hana.uno/' }
+              footer: { text: `https://hana.uno/ | ${new Date() - startTime} ms` }
             }
           }
         }
