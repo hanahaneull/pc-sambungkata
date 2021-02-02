@@ -6,7 +6,7 @@ module.exports = class SambungKata extends Plugin {
     powercord.api.commands.registerCommand({
       command: 'sk',
       description: 'Ngecheat pas main sambung-kata :vrottt',
-      usage: '{c} kata [minimal kata] [max result]',
+      usage: '{c} kata [minimal kata] [max result (default 10)]',
       executor: async args => {
         const kata = args[0]
         if (!kata)
@@ -39,11 +39,9 @@ module.exports = class SambungKata extends Plugin {
             result: {
               type: 'rich',
               title: 'Hasil',
-              description: result.slice(0, args[2] || result.length).join(' | '),
+              description: result.slice(0, args[2] || 10).join(' | '),
               color: Math.floor(Math.random() * 16777215),
-              footer: {
-                text: 'https://hana.uno/'
-              }
+              footer: { text: 'https://hana.uno/' }
             }
           }
         }
@@ -60,6 +58,7 @@ module.exports = class SambungKata extends Plugin {
       }
     })
   }
+
   pluginWillUnload () {
     powercord.api.commands.unregisterCommand('sk')
   }
