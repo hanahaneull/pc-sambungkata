@@ -35,7 +35,7 @@ module.exports = class SambungKata extends Plugin {
             }
           for (const data in res.body) {
             if (!data.word) {
-              result.push(x)
+              result.push(data)
               break
             }
             result.push(data.word)
