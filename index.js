@@ -11,8 +11,10 @@ module.exports = class SambungKata extends Plugin {
         const kata = args[0]
         if (!kata)
           return {
-            send: false,
-            result: 'Masukkan kata untuk dicari!'
+            type: 'rich',
+            title: 'ERROR',
+            description: 'Kamu tidak memberikan input!',
+            color: Math.floor(Math.random() * 16777215)
           }
         const url = `https://api.hana.uno/sk?q=${kata}&l=${args[1] || 0}`
         const res = await get(url)
@@ -46,7 +48,7 @@ module.exports = class SambungKata extends Plugin {
           result: {
             type: 'rich',
             title: 'ERROR',
-            description: 'Kamu tidak memberikan input!',
+            description: 'Laporkan ini ke github\nhttps://github.com/hanahaneull/pc-sambungkata',
             color: Math.floor(Math.random() * 16777215)
           }
         }
