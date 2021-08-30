@@ -1,5 +1,4 @@
 const { Plugin } = require('powercord/entities')
-const { get } = require('powercord/http')
 
 module.exports = class SambungKata extends Plugin {
   async startPlugin () {
@@ -19,40 +18,14 @@ module.exports = class SambungKata extends Plugin {
               color: Math.floor(Math.random() * 16777215)
             }
           }
-        const url = `https://api.hana.uno/sk?q=${kata}&l=${args[1] || 0}`
-        const startTime = new Date()
-        const res = await get(url)
-        if (res.statusCode === 200) {
-          let result = []
-          if (res.body.length === 0)
-            return {
-              send: false,
-              result: {
-                type: 'rich',
-                title: 'ERROR',
-                description: `Tidak menemukan kata yang berawalan dari \`${args[0]}\``,
-                color: Math.floor(Math.random() * 16777215)
-              }
-            }
-          res.body.forEach(x => result.push(`**${x.word || x}**`))
-          return {
-            send: false,
-            result: {
-              type: 'rich',
-              title: 'Hasil',
-              description: result.slice(0, args[2] || 10).join(' | '),
-              color: Math.floor(Math.random() * 16777215),
-              footer: { text: `https://hana.uno/ | ${new Date() - startTime} ms` }
-            }
-          }
-        }
+        const kbbi = require('./kbbi.json')
+        const word = kbbi.filter(x => x.startsWith(args[0]) && x.length > (args[1] || 0)).sort((a, b) => b.length - a.length)
         return {
           send: false,
           result: {
             type: 'rich',
-            title: 'ERROR',
-            description:
-              'Laporkan ini ke github\nhttps://github.com/hanahaneull/pc-sambungkata',
+            title: 'Hasil',
+            description: word.slice(0, args[2] || 10).join(' **|** '),
             color: Math.floor(Math.random() * 16777215)
           }
         }
